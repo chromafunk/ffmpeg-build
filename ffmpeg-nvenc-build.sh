@@ -42,14 +42,14 @@ Clone() {
     git pull
 }
 
-PKGS="autoconf automake libtool patch make cmake bzip2 unzip wget git mercurial cmake3"
+PKGS="autoconf automake libtool patch make cmake bzip2 unzip wget git mercurial cmake"
 
 installAptLibs() {
     sudo apt-get update
     sudo apt-get -y --force-yes install $PKGS \
       build-essential pkg-config texi2html software-properties-common \
       libfreetype6-dev libgpac-dev libsdl1.2-dev libtheora-dev libva-dev \
-      libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev zlib1g-dev
+      libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev zlib1g-dev libfribidi-dev
 }
 
 installYumLibs() {
@@ -68,7 +68,7 @@ installLibs() {
 
 installCUDASDKdeb() {
     UBUNTU_VERSION="$1"
-    local CUDA_REPO_URL="https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION}/x86_64/cuda-repo-ubuntu1804_${CUDA_VERSION}_amd64.deb"
+    local CUDA_REPO_URL="https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_VERSION}/x86_64/cuda-repo-ubuntu1604_${CUDA_VERSION}_amd64.deb"
     Wget "$CUDA_REPO_URL"
     sudo dpkg -i "$(basename "$CUDA_REPO_URL")"
     sudo apt-key adv --fetch-keys "$CUDA_REPO_KEY"
@@ -132,9 +132,9 @@ compileYasm() {
 compileLibX264() {
     echo "Compiling libx264"
     cd "$WORK_DIR/"
-    Wget http://download.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
+    Wget https://download.videolan.org/pub/x264/snapshots/x264-snapshot-20191216-2245.tar.bz2
     rm -rf x264-snapshot*/ || :
-    tar xjvf last_x264.tar.bz2
+    tar xjvf x264-snapshot-20191216-2245.tar.bz2
     cd x264-snapshot*
     ./configure --prefix="$DEST_DIR" --bindir="$DEST_DIR/bin" --enable-static --enable-pic
     Make install distclean
@@ -162,7 +162,7 @@ compileLibAom() {
     Clone https://aomedia.googlesource.com/aom
     mkdir ../aom_build
     cd ../aom_build
-    which cmake3 && PROG=cmake3 || PROG=cmake
+    which cmake && PROG=cmake || PROG=cmake
     $PROG -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$DEST_DIR" -DENABLE_SHARED=off -DENABLE_NASM=on ../aom
     Make install
 }
