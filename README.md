@@ -6,9 +6,9 @@
 ### Supported OS'es:
 
 * ~~Ubuntu 16.04~~
-* Ubuntu 18.04
-* LinuxMint 19.1 (untested)
-* CentOS 7 (untested)
+* Ubuntu 18.04 (testing...)
+* _LinuxMint 19.1 (untested)_
+* _CentOS 7 (untested)_
 
 ### Based on:
 
